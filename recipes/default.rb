@@ -24,7 +24,7 @@ Dir.glob("#{organism_directory}/**/*"){|io_object|
     end
   else
     cookbook_file target_path do
-      source relative_path_io_object
+      source "organism/#{relative_path_io_object}"
       owner ENV['USER']
     end
   end
