@@ -29,3 +29,12 @@ Dir.glob("#{organism_directory}/**/*"){|io_object|
     end
   end
 }
+
+atom_home = "#{ENV['HOME']}/.atom"
+
+execute "correct_ownership_of_atom_home" do
+  command "chown -R #{ENV['USER']} #{atom_home}"
+  not_if {
+    !::File.exist?(atom_home) and IO.popen("find #{atom_home} ! -user #{ENV['USER']}").readlines.empty?
+  }
+end
